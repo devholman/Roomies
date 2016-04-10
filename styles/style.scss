@@ -1,16 +1,7 @@
 @import "../bower_components/normalize-scss/_normalize.scss";
 @import "../bower_components/typeplate-starter-kit/scss/_typeplate.scss";
 
-p+p {
-    text-indent: 0;
-    margin-top: 0;
-}
 
-p {
-    max-width: 80ch;
-    margin-left: 0;
-    margin-right: auto;
-}
 
 ul, ol {
     max-width: 80ch;
@@ -127,3 +118,19 @@ body {
 /**
  * App code
  */
+ // **************************Add Roomie Styles***************************//
+.roomie-container {
+    background: whitesmoke;
+    padding: 20px;
+    
+}
+
+ // **************************Chores Styles***************************//
+ .chores-container {
+    background: steelblue;
+
+        div {
+            display: inline-block;
+            padding: 10px;
+        }
+ }
