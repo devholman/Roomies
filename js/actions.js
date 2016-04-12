@@ -77,7 +77,7 @@ export var Actions = {
  			done: false,
  			done_by: 'date',
  			userId: currentUserId
- 			houseID: 
+ 		
  	
  		})
  }
