@@ -1,4 +1,4 @@
-import {Collections,Models} from './collections'
+import {Collections, Models} from './collections'
 
 
 var ref = new Firebase("https://roomieshare.firebaseio.com/")
@@ -45,55 +45,44 @@ export var Actions = {
 
  addHouse: function(houseName){
 	var currentUserId = ref.getAuth().uid
-	var hc = new Collections.HousesCollection(currentUserId)
-	hc.create({
-		houseName:houseName,
-		roomies: null
+	var hc = new Collections.HousesCollection()
+	var houseObj = hc.create({
+		name:houseName
 	})
-
-	hc.on('sync',function() {
-		var theHouse = hc.where({houseName: houseName})[0]
-		console.log(theHouse)
-		var houseId = theHouse.id
-		console.log(houseId)
-
-		var um = new Models.UserModel(currentUserId)
-			um.set({
-				houseName: houseName,
-				houseID  : houseId
-			})
+	console.log(houseObj)
+	var habColl = new Collections.HabitationsCollection()
+	habColl.create({
+		houseID: houseObj.id,
+		userId: currentUserId
 	})
- },
+},
 
- addRoomate: function(roomieName,roomieEmail){
- 	var uc = new Collections.UserCollection()
- 		uc.create({
- 			roomieName : roomieName,
- 			roomieEmail: roomieEmail
- 		})
+ 
 
- 		uc.on('sync', function(){
- 			var theRoomie = uc.where({roomieEmail:roomieEmail})[0]
- 				console.log(theRoomie)
- 			var roomieEm = theRoomie.get('roomieEmail')
- 				console.log("the new roomie:", roomieEm)
- 			
- 			var qe = new Collections.QueryByEmail(roomieEm)
- 			console.log("this is qe",qe)
-
- 		})
- },
+ // addRoomate: function(roomieName,roomieEmail){
+ // 	// I need to query by email to return object 
+ // 	//for this user and add them to the habitat by their id
+ // 		})
+ // },
 
  addAChore: function(choreText){
  	var currentUserId = ref.getAuth().uid
+	var cc = new Collections.ChoresCollection()
+	var hc = new Collections.HabitationsCollection()
 
- 		var cc = new Collections.ChoresCollection(currentUserId)
- 			
- 			cc.set({
- 				chore: choreText
- 			})
+	console.log("this is hc:", hc)
+	console.log('this is cc:',cc)
+ 		cc.create({
+ 			choreName: choreText,
+ 			done: false,
+ 			done_by: 'date',
+ 			userId: currentUserId
+ 			houseID: 
+ 	
+ 		})
  }
 
 }
+
 
 

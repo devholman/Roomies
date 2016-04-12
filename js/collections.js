@@ -6,14 +6,8 @@ var ref = new Firebase("https://roomieshare.firebaseio.com/")
 
 export var Collections = {
 
-	RoomiesCollection: BackboneFire.Firebase.Model.extend({
-		
-		initialize: function(){
-		this.url = `${rootURL}/roomies`
-		}
-	}),
 
-	ChoresCollection: BackboneFire.Firebase.Model.extend({
+	ChoresCollection: BackboneFire.Firebase.Collection.extend({
 
 		initialize: function(){
 			this.url = `${rootURL}/chores`
@@ -26,14 +20,20 @@ export var Collections = {
 		}
 	}),
 
-	UserHouseCollection: BackboneFire.Firebase.Collection.extend({
-		initialize: function(uid){
-			this.url = `${rootURL}/users/${uid}/houses/`
+	HousesCollection: BackboneFire.Firebase.Collection.extend({
+		initialize:function () {
+			this.url = `${rootURL}/houses/`
 		}
 	}),
 
-	HousesCollection: BackboneFire.Firebase.Collection.extend({
-		url: `${rootURL}/houses/`
+	HabitationsCollection: BackboneFire.Firebase.Collection.extend({
+		url: `${rootURL}/habitations`,
+
+		initialize: function(){
+			var ref = new Firebase(this.url)
+			this.url = this.url
+		
+		}
 	}),
 
 	QueryByEmail: BackboneFire.Firebase.Collection.extend({
@@ -45,6 +45,11 @@ export var Collections = {
 }
 
 export var Models = {
+
+	HouseModel: BackboneFire.Firebase.Model.extend({
+		urlRoot: `${rootURL}/houses`
+	}),
+
 	UserModel: BackboneFire.Firebase.Model.extend({
 		initialize: function(uid){
 			this.url = `${rootURL}/users/${uid}`

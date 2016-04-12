@@ -160,8 +160,8 @@ var HouseCreationView = React.createClass({
 
 	_addHouse: function(e){
 		e.preventDefault()
-		console.log("the house func:", this)
 		Actions.addHouse(this.house)
+		console.log("the new house func", this)
 		location.hash = "userDash"
 	},
 
@@ -179,6 +179,25 @@ var HouseCreationView = React.createClass({
 })
 
 var UserDashView = React.createClass({
+	getInitalState: function(){
+		var habitation = this.props.habitationColl
+	},
+
+	componentDidMount:function(){
+		var component = this
+		var habitationColl = new Collections.HabitationsCollection(ref.getAuth().uid)
+		habitationColl.on('sync', function(){
+			console.log("the hab call, get id:",habitationColl)
+			var houseNum = habitationColl.models[0].get('houseID')
+			console.log(houseNum)
+			// get the houseId off of habitationColl,
+			// component.setState({habitationColl: habitationCol})
+			// pass down the habitationColl as prlops 
+			//    to ChoresView --> ChoreAdder
+		})
+
+	},
+
 	render: function(){
 		return(
 			<div>
@@ -187,7 +206,7 @@ var UserDashView = React.createClass({
 				<hr/>
 				<AddRoomieView/>
 				<hr/>
-				<ChoresView/>
+				<ChoresView houseNum={this.houseNum}/>
 			</div>
 		)
 	}
@@ -252,13 +271,17 @@ var ChoreAdder = React.createClass({
 	_handleKeyDown: function(keyEvent){
 		if(keyEvent.keyCode ===13){
 			var newChore = keyEvent.target.value
-			
+
+			//this.props.currentHouseId	
+			console.log('chore adder view:', this.props.houseNum)
+
 			Actions.addAChore(newChore)
 			keyEvent.target.value=''
 		}
 	},
 
 	render: function(){
+		console.log(this.props)
 		return(
 			<input className="search-bar" placeholder="Add a new chore" onKeyDown={this._handleKeyDown}></input>
 		)
@@ -273,6 +296,7 @@ var RoomieRouter = BackboneFire.Router.extend({
 		"login"          : "handleLogin",
 		"*Default"       : "handleHome"
 	},
+	
 	initialize: function(){
 		this.ref = new Firebase(rootURL)
 
@@ -298,7 +322,7 @@ var RoomieRouter = BackboneFire.Router.extend({
 	},
 
 	handleHouseCreation: function(){
-
+		
 		DOM.render(<HouseCreationView />, document.querySelector('.container'))
 	},
 
