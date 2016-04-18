@@ -1,88 +1,158 @@
 import {Collections, Models} from './collections'
+import DOM from 'react-dom'
+import React, {Component} from 'react'
+import {DashView,RoomieChore} from './views'
+import BackboneFire from 'bbfire'
+
+
 
 
 var ref = new Firebase("https://roomieshare.firebaseio.com/")
 
+function triggerBackboneEventAsync(evtName, payload){
+	setTimeout(function(){
+		console.log("poll for new data triggering!")
+		BackboneFire.Events.trigger(evtName, payload)
+	},	500 )
+}
+
 export var Actions = {
-	roomies: null,
 
  userSignIn: function(email,password){
-	console.log(email)
+	// 
 	ref.authWithPassword({
 		email:email,
 		password:password
 	}, function(error,authData){
-		if (error) console.log(error)
+		if (error) {
+			console.log(error)
+		}
 		else{
-			// console.log('signing in')
+			// 
 			// var um = new Models.UserModel(authData.uid) 
-			// console.log("this is um:", um) //puts all user data on the router
+			// 
 			// um.fetchWithPromise().then(function(){
-			// 	console.log('fetched')
-				location.hash = "createHouse"
-			
+			// 	
+			location.hash = "DashView"
 		}
 	})
  },
 
  createUser: function(email,password,name){
-	console.log(email,password,name)
 	ref.createUser({
 		email: email,
 		password:password
 	}, function(error,authData){
-		if(error) console.log(error)
+		if(error) {
+			alert(error)
+		}
 		else{
-			var userColl = new Collections.UserCollection(authData.uid)
-			userColl.create({
+			var userMod = new Models.UserModel(authData.uid)
+			userMod.set({
 				name :name,
 				email:email,
-				id   :authData.uid
+				id   :authData.uid,
 			})
 		}
 	})
  },
 
- addHouse: function(houseName){
+ doSignUp: function(){
+ 	location.hash = "createAccount"
+ },
+
+ doSignIn: function(){
+ 	location.hash = "logIn"
+ },
+
+ addHouse: function(houseName){ // creates a house name during initial user account setup
 	var currentUserId = ref.getAuth().uid
 	var hc = new Collections.HousesCollection()
 	var houseObj = hc.create({
 		name:houseName
 	})
-	console.log(houseObj)
-	var habColl = new Collections.HabitationsCollection()
-	habColl.create({
-		houseID: houseObj.id,
-		userId: currentUserId
+	var houseId = houseObj.id
+	// 
+	var um = new Models.UserModel(currentUserId) // sets the house id on the user model
+	
+
+	um.on('sync change', function(){
+		triggerBackboneEventAsync('pollForNewData', um.get('houseId'))
 	})
-},
 
- 
+	um.set({houseId:houseId})
+	// um.on('sync', function(){
+	// 	this.routeUserToProperView(um)
+	// })
 
- // addRoomate: function(roomieName,roomieEmail){
- // 	// I need to query by email to return object 
- // 	//for this user and add them to the habitat by their id
- // 		})
+ },
+
+
+ addRoomate: function(roomieModel,houseId){
+ 	// sets & saves (autosync is set to false on query func) 
+ 	//the passed in houseId to the roomie model that was passed
+ 	// from RoomieAdder<_submitRoomie function on views.js
+
+	roomieModel.set({houseId: houseId}) 	
+	roomieModel.save()
+ 		
+ },
+
+ removeItem: function(choreModel){
+ 	choreModel.destroy()
+ },
+
+ // removeChore: function(choreModel){
+ // 	var remChore = choreModel.get('houseId') 
+ // 	console.log('chre mod:',choreModel)
+ // 	choreModel.remove( remChore )
  // },
 
- addAChore: function(choreText){
+ addAChore: function(choreText,houseId){
  	var currentUserId = ref.getAuth().uid
 	var cc = new Collections.ChoresCollection()
-	var hc = new Collections.HabitationsCollection()
-
-	console.log("this is hc:", hc)
-	console.log('this is cc:',cc)
  		cc.create({
- 			choreName: choreText,
+ 			choreText: choreText,
  			done: false,
- 			done_by: 'date',
- 			userId: currentUserId
- 		
- 	
+ 			houseId: houseId
  		})
+ },
+
+ grabAChore: function(choreModel){
+ 	var currentUserId = ref.getAuth().uid
+ 	choreModel.set({
+ 		user: currentUserId
+ 	})
  }
 
+
+ // routeUserToProperView: function(usrModel){
+ // 	// 
+ // 	var houseId  = usrModel.get('houseId')
+ // 	console.log(houseId)
+
+ // 	if( houseId === "nothing" ) {
+ // 		// 
+ // 		DOM.render(<WaitForInviteView/>,document.querySelector('.container'))
+
+ // 	}else{
+ 	
+ // 		var choresInHouseColl  = new Collections.QueryByHouseId(houseId)
+ // 		// var getTheRoomies 	   = new Collections.QueryByEmail
+ // 		var roomiesInHouseColl = new Collections.QueryUserByHouseId(houseId)
+
+ // 		// 
+ // 		DOM.render(<DashView houseId={houseId} choresInHouseColl={choresInHouseColl} roomiesInHouseColl={roomiesInHouseColl}/>, document.querySelector('.container'))
+ // 	}
+
+ // }
+
+
 }
+ 			
+
+
+
 
 
 

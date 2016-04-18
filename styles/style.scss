@@ -118,7 +118,93 @@ body {
 /**
  * App code
  */
+ body{
+    padding: 5%;
+    // background: whitesmoke;
+    // background-image: url("./images/Screen Shot 2016-04-17 at 11.27.54 AM.png");
+
+ }
+ // **************************Header Styles***************************//
+.header-container{
+    margin: 0% 0% 3% 7%;
+    font-family: 'Pacifico', cursive;
+
+
+}
+
+// **************************Splash View Styles***************************//
+
+.splash-container {
+    h3 {
+        margin-top: 30px;
+        position: relative;
+        text-align: center;
+    }
+}
+.splash-header-container{
+    display: flex;
+    justify-content: space-between;
+    width: 86.8%;
+    position: relative;
+    left: 85px;
+    // color: white;
+    font-family: 'Pacifico', cursive;
+}
+
+.background-img{
+    background-image: url("./images/Ariel-Roomie 1.jpg");
+    background-repeat: no-repeat;
+    height: 460px;
+    background-position: center;
+}
+
+.splash-btn-container{
+    width: 55%;
+    text-align: right;
+    display: flex;
+    height: 105px;
+    justify-content: space-between;
+    position: relative;
+
+    button {
+        background-color: white; /* Green */
+        border: none;
+        color: black;
+        // padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+    }
+
+    p {
+        margin: auto auto 0.9em;
+
+        font-size: 30px;
+    }
+}
+// **************************Sign In Styles***************************//
+.signUp-form { 
+    input{
+        border: 2px solid red;
+    }
+}
+
+// **************************Sign In Styles***************************//
+
+.signIn-container{
+    form {
+        text-align: center;
+    }
+
+    .user-info {
+
+    }
+}
+
+
  // **************************Add Roomie Styles***************************//
+
 .roomie-container {
     background: whitesmoke;
     padding: 20px;
@@ -126,11 +212,40 @@ body {
 }
 
  // **************************Chores Styles***************************//
+
+
  .chores-container {
     background: steelblue;
 
         div {
+            display: block;
+            padding: 5px;
+        }
+
+        p {
             display: inline-block;
-            padding: 10px;
+            margin: 0;
+            padding: 5px;
+            font-size: 30px;
+
+        }
+
+        .chore-btn-container{
+            display: inline-block;
+            border: none;
         }
  }
+.chore-header {
+    text-align: right;
+
+    .chore-remove-btn {
+       display: inline-block;
+       border-radius: 50%;
+       font-size: small;
+    }
+}
+ #chore-styles {
+    border: 1px solid;
+ }
+
+
