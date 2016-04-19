@@ -39,6 +39,7 @@ export var Actions = {
  },
 
  createUser: function(email,password,name){
+	var self = this
 	ref.createUser({
 		email: email,
 		password:password
@@ -53,6 +54,7 @@ export var Actions = {
 				email:email,
 				id   :authData.uid,
 			})
+			self.userSignIn(email,password)
 		}
 	})
  },
@@ -121,7 +123,24 @@ export var Actions = {
  grabAChore: function(choreModel){
  	var currentUserId = ref.getAuth().uid
  	choreModel.set({
- 		user: currentUserId
+ 		userId: currentUserId,
+ 		userEmail: ref.getAuth().password.email
+ 	})
+ 
+ },
+
+ sendBack: function(choreModel){
+
+ 	choreModel.set({
+ 		userId: undefined,
+ 		userEmail: undefined
+ 	})
+
+ 	var ncm = new choreModel()
+ 	
+ 	ncm.on('sync', function(){
+ 	 	var component = this
+ 	 	component.forceUpdate()
  	})
  }
 

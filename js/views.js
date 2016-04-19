@@ -13,6 +13,7 @@
 			return(
 				<div className="header-container">
 					<h3 className="header">Roomies</h3>
+					<h6>Sharing a home has never been easier</h6>
 					<hr/>
 				</div>
 			)
@@ -54,12 +55,13 @@
 
 		render: function(){
 			return(
-				<div>
-					<a href="#chores">chores</a>
-					<a href="#myHouse">My House</a>
-					<a href="#addRoomies">Add Roomies</a>
-					<a href="#logOut">LogOut</a>
-					<a href="#newhouse">Create a new house</a>
+				<div className="nav-bar-container">
+					<a className="nav-links" href="#chores">House Chores </a>
+					<a className="nav-links" href="#myHouse">My Chores </a>
+					<a className="nav-links" href="#addRoomies">Add Roomies </a>					
+					<a className="nav-links" href="#createHouse">Create a new house </a>
+					<a className="nav-links" href="#logOut">LogOut </a>
+					<hr/>
 				</div>
 			)
 		}
@@ -112,6 +114,8 @@
 			else {
 				var content = (
 					<div>
+						<Header/>
+						<NavBar />
 						<h3>Please wait for a House Invite</h3><br/>
 						<h3>Or</h3>
 						<CreateNewHouseView/>
@@ -136,7 +140,6 @@
 				<div className="authPage">
 					<Header />
 					<SignUp /> 
-					<SignIn />
 				</div>
 			)
 		}
@@ -277,11 +280,11 @@
 			console.log("roomie chores list:", this.props.roomieChoresColl)
 			return(
 				<div>
-					<div>
+					<div className="welcome-header">
 						<h3>{`Welcome ${userName}`}</h3>
 					</div>
-					<div>
-						<p>List of user chores</p>
+					<div className="my-chores-container">
+						<h5>My Chores</h5>
 						<div>
 							{this.props.roomieChoresColl.map(this._viewChore)}
 						</div>
@@ -294,47 +297,33 @@
 
 	var RoomieChore 		 = React.createClass({
 		
-		_remover: function(choreModel){
+		_deleter: function(choreModel){
 			Actions.removeItem(this.props.choreMod)
+		},
+
+		_updater: function(){
+			this.forceUpdate()
+		},
+
+		_remover: function(choreModel){
+			Actions.sendBack(this.props.choreMod)
 		},
 
 		render: function(){
 			return(
-				<div>
-					<p>{this.props.choreMod.get('choreText')}</p>
-					<button onClick={this._remover}>X</button>
+				<div className="single-chore-container">
+					<div className="chore-header">
+						<button onClick={this._deleter}>X</button>
+					</div>
+					<div className="chore-body">
+						<p>{this.props.choreMod.get('choreText')}</p>
+						<button className="unclaim-chore-btn" onClick={this._remover}>Unclaim</button>
+					</div>
 				</div>
 			)
 		}
 	})
 
-	// var DashView2 = React.createClass({
-
-
-	// 	componentDidMount:function(){
-	// 		var component = this
-	// 		this.props.choresInHouseColl.on('sync update', function(){
-	// 			component.forceUpdate()
-	// 		})
-	// 		this.props.roomiesInHouseColl.on('sync update', function(){
-	// 			component.forceUpdate()
-	// 		})
-
-	// 	},
-
-	// 	render: function(){
-			
-	// 		return(
-	// 			<div>
-	// 				<Header />
-	// 				<hr/>
-	// 				<ChoresList viewType="setup" houseId={this.props.houseId} choresInHouseColl={this.props.choresInHouseColl} />
-	// 				<RoomieAdder houseId={this.props.houseId}/>
-	// 				<RoomieList houseId={this.props.houseId} roomiesInHouseColl={this.props.roomiesInHouseColl} />
-	// 			</div>
-	// 		)
-	// 	}
-	// })
 
 // *************** CHORE VIEWS ******************
 
@@ -347,18 +336,55 @@
 			})
 		},
 
-		_updater: function(){
-			this.setState({
-				choreData: this.state.choresInHouseColl
-			})
+		_genButtons: function(){
+			var btns =[" Show All","Claimed","Unclaimed"].map(function(toDoStatus,id){
+				return <button key={id} onClick={this._buttonValue} value={toDoStatus}>{toDoStatus}</button>
+			}.bind(this))
+			return btns
+		},
+
+		_buttonValue: function(e){
+			var buttonVal = e.target.value
+				this.setState ({
+					viewType: buttonVal
+				})
+		},
+
+
+		getInitialState: function(){  //puts the data from the collection on state
+			return{    
+				choreData: this.props.choresInHouseColl,
+				viewType: " Show All" 
+			}
+		},
+
+		_NoIdView: function(choreModel){
+			if(choreModel.get('userId') === undefined){
+				return true
+			}else{
+				return false
+			}
+		},
+
+		_hasId: function(choreModel){
+			if(!choreModel.get('userId') === undefined){
+				return true
+			}else{
+				return false
+			}
 		},
 
 		render: function(){
+			var choresShowing = this.state.choreData.models
+			if(this.state.viewType === "Unclaimed")choresShowing =this.props.choresInHouseColl.filter(this._NoIdView)
+			if(this.state.viewType === "Claimed")choresShowing=this.props.choresInHouseColl.filter(this._hasId)
+
 			return(
 				<div>
 					<Header />
 					<NavBar />
-					<ChoresList choresInHouseColl={this.props.choresInHouseColl} houseId={this.props.houseId}/>
+					<div className="view-buttons">{this._genButtons()}</div>
+					<ChoresList choresInHouseColl={this.props.choresInHouseColl} choreData={choresShowing} houseId={this.props.houseId}/>
 				</div>
 			)
 		}
@@ -379,38 +405,33 @@
 				keyEvent.target.value=''
 			}
 		},
+//if the viewType = claimed then filter chores collection for all with user id
+// if the viewType = unclaimed then filter chores collection for all where userid is undefined
+//{this.props.choresInHouseColl.filter(this._filterView).map(this._makeChore)}					
 
-		getInitialstate: function(){
-			return{
-				choresInHouseColl: this.props.choresInHouseColl
-			}
-		},
-
-		_filterView: function(choreModel){
-			console.log("filtering chores:", choreModel)
-			if(choreModel.get('user') === undefined){return choreModel}
-		},
-
-		_showUnclaimedChores: function(choresColl){
+		componentDidMount: function(){
 			var component = this
-			choresColl.filter(component._filterView).map(component._makeChore)
+			BackboneFire.Events.on('getUserId', function(userId){
+			})
 		},
 
 		render: function(){
-		
+
 		   // if(this.props.viewType === "dash")// ....your logic here for var scssViewClass= «class-name-in-scss»
-			//	this._showUnclaimedChores(this.props.choresInHouseColl)		
 			//	{this.props.choresInHouseColl.map(this._makeChore)}
 			
 
 			return(
-				<div className="chores-container">
-					<div>
+	
+					<div className="chores-container">
 						<h5>Shared Chores</h5><br/>
-						<input className="search-bar" placeholder="Add a new chore" onKeyDown={this._choreAdder} />	
-						{this._showUnclaimedChores(this.props.choresInHouseColl)}					
+						<div>
+							<input className="search-bar" placeholder="Add a new chore" onKeyDown={this._choreAdder} />	
+							{this.props.choreData.map(this._makeChore)}
+						</div>
 					</div>
-				</div>
+
+				
 			)
 		}
 	})
@@ -418,34 +439,49 @@
 	var Chore 	   = React.createClass({
 
 		_remover: function(){
-			console.log("this is props:", this.props)
-
 			Actions.removeItem(this.props.model)
 		},
 
 		_grabber: function(){
 			Actions.grabAChore(this.props.model)
-			// Actions.removeChore(this.props.model)
 		},
 
-		render: function(){ 
-			console.log(this)
+		render: function(){
+		 // case where chore is claimed
+			var buttonStyleObj={
+				display:"none"
+			}
+			var claimed=`claimed by: ${this.props.model.get('userEmail')}`
+
+		
+		//case where chore is unclaimed
+
+			if(!this.props.model.get('userId')){ // if userId is not set on the chore model then show the 'claim' button
+				buttonStyleObj.display="inline-block"
+				claimed = ''
+			}
+
+
+
+			
 			return(
-				<div className="chore-container" id="chore-styles">
+				<div className="single-chore-container" id="chore-styles">
 					<div className="chore-header">
-						<button className="chore-remove-btn" onClick={this._remover}>X</button>
+						<button style={buttonStyleObj} className="chore-remove-btn" onClick={this._remover}>X</button>
 					</div>
 					<div className="chore-body">
 						<p>{this.props.model.get('choreText')}</p>
-						<button className="grab-chore-btn" onClick={this._grabber}>Claim it</button>
+						<button style={buttonStyleObj} className="grab-chore-btn" onClick={this._grabber}>Claim it</button>
+						
 					</div>
 					<div className="chore-footer">
-						<p>Due by:</p>
+						<span>{claimed}</span>
 					</div>
 				</div>
 			)
 		}
 	})
+
 
 // *************** ROOMIE VIEWS ******************
 
@@ -538,4 +574,4 @@
 		}
 	})
 
-export{SplashView,SignIn,AuthView,DashView,MyHouseView,ChoresView,Chore,RoomieView,RoomieChore}
+export{SplashView,SignIn,AuthView,DashView,MyHouseView,ChoresView,Chore,RoomieView,RoomieChore,CreateNewHouseView}

@@ -12,7 +12,7 @@ import DOM from 'react-dom'
 import React, {Component} from 'react'
 import {Actions} from './actions'
 import {Collections,Models} from './collections'
-import {SplashView,SignIn,AuthView,DashView,MyHouseView,ChoresView,Chore,RoomieView} from './views'
+import {SplashView,SignIn,AuthView,DashView,MyHouseView,ChoresView,Chore,CreateNewHouseView,RoomieView} from './views'
 
 // `${rootURl}/houses/${houseID}/chores`
 BackboneFire.Firebase.Model.prototype.fetchWithPromise = BackboneFire.Firebase.Collection.prototype.fetchWithPromise = function() {
@@ -99,6 +99,10 @@ var RoomieRouter = BackboneFire.Router.extend({
 			})
 		}
 	},	
+
+	handleHouseCreation: function(){
+		DOM.render(<CreateNewHouseView/>, document.querySelector('.container'))
+	},
 
 	handleMyHouse: function(){
 		function renderUserChoreView(UserModel){

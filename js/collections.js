@@ -53,7 +53,7 @@ export var Collections = {
 
 	QueryByUserId: BackboneFire.Firebase.Collection.extend({
 		initialize: function(targetUserId){
-			this.url = ref.child('chores').orderByChild('user').equalTo(targetUserId)
+			this.url = ref.child('chores').orderByChild('userId').equalTo(targetUserId)
 		}
 	})
 }
