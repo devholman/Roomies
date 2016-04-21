@@ -66,24 +66,24 @@ var RoomieRouter = BackboneFire.Router.extend({
 
 	handleSignUp: function(){
 
-		DOM.render(<AuthView />, document.querySelector('.container'))
+		DOM.render(<AuthView />, document.querySelector('#app-container'))
 	},
 
 	handleSplash: function(){
 
-		DOM.render(<SplashView />, document.querySelector('.container'))
+		DOM.render(<SplashView />, document.querySelector('#app-container'))
 	},
 
 	handleLogIn: function(){
 
-		DOM.render(<SignIn />, document.querySelector('.container') )
+		DOM.render(<SignIn />, document.querySelector('#app-container') )
 	},
 
 	handleDashView: function() {
 		function renderDashView(usrModel){
 			var houseId = um.get('houseId')
 
-			DOM.render(<DashView houseId={houseId} />, document.querySelector('.container'))
+			DOM.render(<DashView houseId={houseId} />, document.querySelector('#app-container'))
 
 		}
 		//this helps change the view on hash change. Because of open socket connection w/ fb
@@ -101,14 +101,14 @@ var RoomieRouter = BackboneFire.Router.extend({
 	},	
 
 	handleHouseCreation: function(){
-		DOM.render(<CreateNewHouseView/>, document.querySelector('.container'))
+		DOM.render(<CreateNewHouseView/>, document.querySelector('#app-container'))
 	},
 
 	handleMyHouse: function(){
 		function renderUserChoreView(UserModel){
 			var roomieChoresColl = new Collections.QueryByUserId(ref.getAuth().uid)
 
-			DOM.render(<MyHouseView roomieChoresColl={roomieChoresColl} myMod={myMod} />, document.querySelector('.container') )
+			DOM.render(<MyHouseView roomieChoresColl={roomieChoresColl} myMod={myMod} />, document.querySelector('#app-container') )
 		}
 
 		var myMod = new Models.UserModel(ref.getAuth().uid)
@@ -126,7 +126,7 @@ var RoomieRouter = BackboneFire.Router.extend({
 			var houseId  = usrModel.get('houseId')
 			var choresInHouseColl = new Collections.QueryByHouseId(houseId)
 
-			DOM.render(<ChoresView choresInHouseColl={choresInHouseColl} houseId={houseId}/>, document.querySelector('.container'))
+			DOM.render(<ChoresView choresInHouseColl={choresInHouseColl} houseId={houseId}/>, document.querySelector('#app-container'))
 		}
 
 		var usrModel = new Models.UserModel(ref.getAuth().uid)
@@ -144,7 +144,7 @@ var RoomieRouter = BackboneFire.Router.extend({
 			var houseId = um.get('houseId')
 			var roomiesInHouseColl = new Collections.QueryUserByHouseId(houseId)
 			
-			DOM.render(<RoomieView houseId={houseId} roomiesInHouseColl={roomiesInHouseColl}/>, document.querySelector('.container'))
+			DOM.render(<RoomieView houseId={houseId} roomiesInHouseColl={roomiesInHouseColl}/>, document.querySelector('#app-container'))
 
 		}
 		var um = new Models.UserModel(ref.getAuth().uid)
@@ -159,7 +159,7 @@ var RoomieRouter = BackboneFire.Router.extend({
 
 	handleLogout: function(){
 		ref.unauth()
-		DOM.render(<SplashView />, document.querySelector('.container'))
+		DOM.render(<SplashView />, document.querySelector('#app-container'))
 	}
 
 	// handleDashView2: function(){

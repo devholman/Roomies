@@ -33,7 +33,7 @@ export var Actions = {
 			// 
 			// um.fetchWithPromise().then(function(){
 			// 	
-			location.hash = "DashView"
+			location.hash = "chores"
 		}
 	})
  },
@@ -101,14 +101,9 @@ export var Actions = {
  },
 
  removeItem: function(choreModel){
+ 	console.log ("trying to delete:", choreModel)
  	choreModel.destroy()
  },
-
- // removeChore: function(choreModel){
- // 	var remChore = choreModel.get('houseId') 
- // 	console.log('chre mod:',choreModel)
- // 	choreModel.remove( remChore )
- // },
 
  addAChore: function(choreText,houseId){
  	var currentUserId = ref.getAuth().uid
@@ -116,7 +111,9 @@ export var Actions = {
  		cc.create({
  			choreText: choreText,
  			done: false,
- 			houseId: houseId
+ 			houseId: houseId,
+ 			userId: "_",
+ 			userEmail: "_"
  		})
  },
 
@@ -130,17 +127,10 @@ export var Actions = {
  },
 
  sendBack: function(choreModel){
-
+ 	console.log(choreModel)
  	choreModel.set({
- 		userId: undefined,
- 		userEmail: undefined
- 	})
-
- 	var ncm = new choreModel()
- 	
- 	ncm.on('sync', function(){
- 	 	var component = this
- 	 	component.forceUpdate()
+ 		userId: "_",
+ 		userEmail: "_"
  	})
  }
 

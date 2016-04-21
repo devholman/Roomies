@@ -32,18 +32,16 @@
 
 		render: function(){
 			return(
-				<div className="splash-header-container">
-					<h2 className="splash-title">Roomies</h2>
-					<div className="splash-btn-container">
-						<button onClick={this._signerInner}>Sign In</button>
-						<p>|</p>
+				<div className="splash-header-container col-xs-12 col-sm-12">
+					<h2 className="splash-title col-xs-12 col-sm-12">Roomies</h2>
+					<div className="splash-btn-container col-xs-12 col-sm-12">
 						<button onClick={this._signerUpper}>Sign Up</button>
+						<p>|</p>
+						<button onClick={this._signerInner}>Sign In</button>
 						<p>|</p>
 						<button>How it Works</button>
 						<p>|</p>
 						<button>Contact</button>
-
-
 					</div>
 				</div>
 			)
@@ -73,8 +71,10 @@
 			return(
 				<div className="splash-container">
 					<SplashHeader />
-					<div className="background-img"></div>
+					<div className="splash-background-img"></div>
 					<h3>"Sharing a home has never been easier"</h3>
+					<HowItWorks/>
+					<ContactUs/>
 				</div>
 			)
 		}
@@ -206,12 +206,13 @@
 			return(
 				<div className="signIn-container">
 					<Header />
+					<div className="signUp-background-img"></div>
 					<form onSubmit={this._doSignIn}>
 						<h3>Sign In</h3>
-						Enter Email:<br/>
-						<input className="user-info" onChange={this._updateEmail} placeholder='' required/><br/>
-						Enter a password:<br/>
-						<input className="user-info" onChange={this._updatePassword} type="password" placeholder='' required/><br/>
+						<label>Enter Email:</label><br/>
+						<input className="user-info" type="text" onChange={this._updateEmail} placeholder='' required/><br/>
+						<label>Enter a password:</label><br/>
+						<input className="user-info" type="text" onChange={this._updatePassword} type="password" placeholder='' required/><br/>
 						<input className="button-primary" type="submit" id="signInBtn" DefaultValue="Sign In"/><br/>
 					</form>
 				</div>
@@ -245,6 +246,40 @@
 		}
 	})
 
+// *************** HOW IT WORKS ********************
+var HowItWorks = React.createClass({
+	
+	render: function(){
+		return(
+			<div className="hiw-container">
+				<h3>How It Works</h3>
+				<ul>
+					<li>Create a House Name</li>
+					<li>Add Your Roomies</li>
+					<li>List House chores</li>
+					<li>Do Your Part</li>
+				</ul>
+			</div>
+		)
+	}
+})
+// *************** CONTACT ********************
+var ContactUs = React.createClass({
+	
+	render: function(){
+		return(
+			<div className="contact-container">
+				<h3>Connect with Us</h3>
+				<form>
+					Name:<input type="text"></input>
+					Email:<input type="text"></input>
+					Comment:<textarea type="text"></textarea>
+				</form>
+			</div>
+		)
+	}
+})
+
 
 // *************** MY HOUSE VIEWS ******************
 
@@ -258,7 +293,7 @@
 
 		render: function(){
 			return(
-				<div>
+				<div className="my-house-body">
 					<Header />
 					<NavBar />
 					<RoomieHouseChoreView myMod={this.props.myMod} roomieChoresColl={this.props.roomieChoresColl} />
@@ -272,24 +307,36 @@
 		_viewChore: function(choreMod, i){
 			if(!choreMod.id ){return ''}
 			return <RoomieChore key={i} choreMod={choreMod}/>
-		},
+	},
+
 
 		render: function(){
 			var myMod = this.props.myMod
 			var userName = myMod.get('name')
 			console.log("roomie chores list:", this.props.roomieChoresColl)
 			return(
-				<div>
+				<div className="container">
 					<div className="welcome-header">
 						<h3>{`Welcome ${userName}`}</h3>
 					</div>
-					<div className="my-chores-container">
-						<h5>My Chores</h5>
-						<div>
-							{this.props.roomieChoresColl.map(this._viewChore)}
-						</div>
 
-					</div>
+
+					<table className="table my-chores-list">
+						<thead>
+							<tr>
+								<th>Chore Name</th>
+								<th>Status</th>
+								<th>Completed</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							{this.props.roomieChoresColl
+								.filter(function(cmod){return cmod.id !== undefined})
+								.map(this._viewChore)}
+						</tbody>
+					</table>
+					
 				</div>
 			)
 		}
@@ -311,15 +358,11 @@
 
 		render: function(){
 			return(
-				<div className="single-chore-container">
-					<div className="chore-header">
-						<button onClick={this._deleter}>X</button>
-					</div>
-					<div className="chore-body">
-						<p>{this.props.choreMod.get('choreText')}</p>
-						<button className="unclaim-chore-btn" onClick={this._remover}>Unclaim</button>
-					</div>
-				</div>
+				<tr>
+					<td className="my-chore-text">{this.props.choreMod.get('choreText')}</td>
+					<td><button className=" btn btn-sm btn-default unclaim-chore-btn" onClick={this._remover}>Unclaim</button></td>
+					<td><button className="btn btn-sm btn-danger" onClick={this._deleter}>X</button></td>
+				</tr>
 			)
 		}
 	})
@@ -350,7 +393,6 @@
 				})
 		},
 
-
 		getInitialState: function(){  //puts the data from the collection on state
 			return{    
 				choreData: this.props.choresInHouseColl,
@@ -359,7 +401,7 @@
 		},
 
 		_NoIdView: function(choreModel){
-			if(choreModel.get('userId') === undefined){
+			if(choreModel.get('userId') === '_'){
 				return true
 			}else{
 				return false
@@ -367,7 +409,7 @@
 		},
 
 		_hasId: function(choreModel){
-			if(!choreModel.get('userId') === undefined){
+			if(choreModel.get('userId') !== undefined){
 				return true
 			}else{
 				return false
@@ -375,16 +417,23 @@
 		},
 
 		render: function(){
+			//if the viewType = claimed then filter chores collection for all with user id
+			// if the viewType = unclaimed then filter chores collection for all where userid is undefined
 			var choresShowing = this.state.choreData.models
 			if(this.state.viewType === "Unclaimed")choresShowing =this.props.choresInHouseColl.filter(this._NoIdView)
 			if(this.state.viewType === "Claimed")choresShowing=this.props.choresInHouseColl.filter(this._hasId)
 
 			return(
-				<div>
+				<div className="shared-house-chores">
 					<Header />
 					<NavBar />
-					<div className="view-buttons">{this._genButtons()}</div>
-					<ChoresList choresInHouseColl={this.props.choresInHouseColl} choreData={choresShowing} houseId={this.props.houseId}/>
+					<div className="container">
+						<div className="row">
+							<div className="col-xs-12 col-sm-3 view-buttons">{this._genButtons()}</div>
+							<ChoresList choresInHouseColl={this.props.choresInHouseColl} choreData={choresShowing} houseId={this.props.houseId}/>
+						</div>
+
+					</div>
 				</div>
 			)
 		}
@@ -405,9 +454,6 @@
 				keyEvent.target.value=''
 			}
 		},
-//if the viewType = claimed then filter chores collection for all with user id
-// if the viewType = unclaimed then filter chores collection for all where userid is undefined
-//{this.props.choresInHouseColl.filter(this._filterView).map(this._makeChore)}					
 
 		componentDidMount: function(){
 			var component = this
@@ -417,21 +463,14 @@
 
 		render: function(){
 
-		   // if(this.props.viewType === "dash")// ....your logic here for var scssViewClass= «class-name-in-scss»
-			//	{this.props.choresInHouseColl.map(this._makeChore)}
-			
-
 			return(
-	
-					<div className="chores-container">
+					<div className="col-xs-12 col-sm-9 chores-container shared-chores-list">
 						<h5>Shared Chores</h5><br/>
 						<div>
-							<input className="search-bar" placeholder="Add a new chore" onKeyDown={this._choreAdder} />	
+							<input className="search-bar" placeholder="Add a new chore and press Enter" onKeyDown={this._choreAdder} />	
 							{this.props.choreData.map(this._makeChore)}
 						</div>
 					</div>
-
-				
 			)
 		}
 	})
@@ -456,14 +495,11 @@
 		
 		//case where chore is unclaimed
 
-			if(!this.props.model.get('userId')){ // if userId is not set on the chore model then show the 'claim' button
+			if(this.props.model.get('userId') === '_'){ // if userId equals _ on the chore model then show the 'claim' button
 				buttonStyleObj.display="inline-block"
 				claimed = ''
 			}
 
-
-
-			
 			return(
 				<div className="single-chore-container" id="chore-styles">
 					<div className="chore-header">
@@ -554,7 +590,7 @@
 		render: function(){
 			
 			return(
-				<div className="roomie-list-container">
+				<div className="col-xs-12 col-sm-12 roomie-list-container">
 					<h3>All My Roomies</h3>
 					{this.props.roomiesInHouseColl.map(this._getRoomie)}
 				</div>
@@ -568,7 +604,6 @@
 			return(
 				<div>
 					<p>{this.props.user.get('name')}</p>
-
 				</div>
 			)
 		}

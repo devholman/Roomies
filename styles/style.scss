@@ -1,13 +1,8 @@
-@import "../bower_components/normalize-scss/_normalize.scss";
-@import "../bower_components/typeplate-starter-kit/scss/_typeplate.scss";
+@import '../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 
-
-ul, ol {
-    max-width: 80ch;
-    margin-left: 0;
-    margin-right: auto;
-}
+$primary-green: rgb(51, 110, 123);
+$primary-red: rgb(221,72,68);
 
 /**
  * BOX-SIZING
@@ -122,27 +117,36 @@ body {
     // background-image: url("./images/Screen Shot 2016-04-17 at 11.27.54 AM.png");
 
  }
+ #app-container {
+    min-height: 100vh;
+    background: $primary-green;
+ }
  // **************************Header Styles***************************//
 .header-container{
     margin: 0%;
     font-family: 'Pacifico', cursive;
     text-align: center;
-    background:rgb(207,234,115);
+    background: rgb(162,222,208);
 
     h3 {
         margin-bottom: 1.60606rem;
         font-size: 100px;
+        margin-top: 0;
+        font-family: 'Pacifico', cursive;
     }
 
     h6 {
         font-size: 20px;
         margin-bottom: 2.60606rem;
+        font-family: 'Pacifico', cursive;
+
 
     }
     hr {
         margin: 0;
-        background-color: rgb(221,72,68);
+        background-color: $primary-red;
         height: 5px;
+        width: 100%;
     }
 
 }
@@ -151,6 +155,14 @@ body {
     text-align: center;
     margin-bottom: 50px;
     background: rgb(89,184,171);
+    padding: 0;
+
+    hr {
+        margin: 0;
+        background-color: $primary-red;
+        height: 5px;
+        width: 100%;
+    }
 
 }
 
@@ -159,6 +171,7 @@ body {
     margin-right: 30px;
     text-align: center;
     color: black;
+    font-size: 24px;
 }
 
 a:hover {
@@ -175,24 +188,31 @@ a:hover {
         font-family: 'Pacifico';
         background: rgb(162,222,208);
         padding: 50px;
+        font-size: 60px;
+
 
     }
 }
 .splash-header-container{
     display: flex;
     justify-content: space-between;
-    width: 86.8%;
-    position: relative;
-    left: 85px;
-    // color: white;
-    font-family: 'Pacifico', cursive;
+    width: 100%;
+    position: fixed;
+    font-family: Pacifico,cursive;
+    background: white;
+
+    h2 {
+        font-family: Pacifico,cursive;
+        font-size: 50px;
+        margin: auto;
+    }
 }
 
-.background-img{
+.splash-background-img{
     background-image: url("./images/Ariel-Roomie 1.jpg");
     background-repeat: no-repeat;
-    height: 630px;
-    width: 1440px;
+    height: 680px;
+    max-width: 100%;
     background-position: center;
 }
 
@@ -221,8 +241,31 @@ a:hover {
 
     }
 }
+
+.hiw-container {
+    background: $primary-red;
+
+    h3 {
+        background: $primary-red;
+        color: white;
+    }
+
+    ul{
+        margin:0;
+    }
+}
+
+.contact-container {
+    background: $primary-green;
+    h3 {
+        background: $primary-green;
+        color: white;
+        font-family: 'Kaushan Script', cursive;
+    }
+}
 // **************************Sign In Styles***************************//
 .signUp-form { 
+    
     input{
         border: 2px solid red;
     }
@@ -231,13 +274,37 @@ a:hover {
 // **************************Sign In Styles***************************//
 
 .signIn-container{
+
+    .signUp-background-img {
+        background-image: url("./images/imageedit_10_4760689381.gif");
+        background-repeat: no-repeat;
+        height: 1120px;
+        background-size: cover;
+        background-position: center;
+
+    }
+
+
     form {
         text-align: center;
+        background: white;
+        width: 30%;
+        height: 40%;
+        opacity: .7;
+        display: inline-block;
+        position: fixed;
+        left: 35%;
+        border: 2px solid;
+        top: 30%;
+        border-radius: 10px;
+        text-decoration: none;
+
+        .user-info {
+            border: 3px solid;
+            outline: none;
+        }
     }
 
-    .user-info {
-
-    }
 }
 
 
@@ -249,30 +316,39 @@ a:hover {
     
 }
 
- // **************************House Chores Styles***************************//
+ // **************************Shared House Chores Styles***************************//
+
+.shared-house-chores {
+    background: $primary-green;
+}
+
+.shared-chores-list {
+    box-shadow: 10px 10px 90px;
+}
 
 .chores-container {
+
     h5 {
-        font-size: 44px;
-        background: rgb(221,72,68);
+        font-size: 48px;
+        background: $primary-red;
         color: white;
     }
 
     .search-bar {
         outline: none;
         border: none;
+        animation: blink-empty 1s;
+        border-bottom: 2px solid;
+        margin: 5% 15%;
+        font-size: 20px;
+        width: 70%;
     }
 }
  .chores-container {
     background: white;
-    display: inline-block;
     text-align: center;
     border-radius: 12px;
-    width: 60%;
 
-        div {
-
-        }
 
         p {
             display: inline-block;
@@ -287,14 +363,29 @@ a:hover {
         }
  }
 
+.grab-chore-btn {
+    background-color: rgb(89,184,171);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+}
+
 .chore-header {
     text-align: right;
     border: none;
 
     .chore-remove-btn {
        display: inline-block;
-       border-radius: 50%;
+       border-radius: 5px;
        font-size: small;
+       background-color: rgb(89,184,171);
+       text-decoration: none;
+       border: none;
+       border: 1px solid;
     }
 }
 
@@ -316,7 +407,7 @@ a:hover {
 
  #chore-styles {
     border-bottom: 3px solid;
-    border-color: rgb(221,72,68);
+    border-color: $primary-red;
     // border-top: 3px solid;
  }
 
@@ -325,17 +416,19 @@ a:hover {
 
 
  .view-buttons {
-    display: inline-block;
-    vertical-align: top;
-    width: 20%;
-    text-align: right;
 
     button {
         display: block;
         font-size: xx-large;
         border: none;
         background: white;
-        border-bottom: 2px solid greenyellow;
+        border-bottom: 2px solid $primary-red;
+        margin: 10px;
+        width: 100%;
+        border-radius: 5px;
+        outline: none;
+        // border-top-right-radius: 5px;
+        // border-top-left-radius: 5px;
 
     }
 
@@ -347,16 +440,35 @@ a:hover {
 
 .welcome-header {
     text-align: center;
+
+    h3{
+        font-size: 46px;
+
+    }
+
 }
 
-.my-chores-container {
-    text-align: center;
+.table {
+    thead {
+        font-size: 24px;
+        background-color: whitesmoke;
+    }
 }
 
- .single-chore-container {
-    width: 70%;
-    border: 1px solid;
-    margin: 0px 15%;
- }
+.my-chores-list {
+        box-shadow: 10px 10px 5px;
+        background: white;
+}
+
+.my-chore-text {
+    font-size: 50px;
+}
+
+.my-house-body {
+    background: $primary-green;
+
+}
+
+
 
 
