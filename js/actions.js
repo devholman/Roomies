@@ -38,6 +38,25 @@ export var Actions = {
 	})
  },
 
+  AutoSignIn: function(email,password){  // this function is a duplicate of the signIn func above
+ 										// it's purpose - sends user to dashView instead of chores 
+ 	ref.authWithPassword({
+ 		email:email,
+ 		password:password
+ 	}, function(error,authData){
+ 		if (error) {
+ 			console.log(error)
+ 		}
+ 		else{
+ 			// 
+ 			// var um = new Models.UserModel(authData.uid) 
+ 			// 
+ 			// um.fetchWithPromise().then(function(){
+ 			// 	
+ 			location.hash = "DashView"
+ 		}
+ 	})
+  },
  createUser: function(email,password,name){
 	var self = this
 	ref.createUser({
@@ -54,7 +73,7 @@ export var Actions = {
 				email:email,
 				id   :authData.uid,
 			})
-			self.userSignIn(email,password)
+			self.AutoSignIn(email,password)
 		}
 	})
  },
@@ -77,16 +96,12 @@ export var Actions = {
 	// 
 	var um = new Models.UserModel(currentUserId) // sets the house id on the user model
 	
-
 	um.on('sync change', function(){
 		triggerBackboneEventAsync('pollForNewData', um.get('houseId'))
 	})
 
 	um.set({houseId:houseId})
-	// um.on('sync', function(){
-	// 	this.routeUserToProperView(um)
-	// })
-
+	location.hash = "chores"
  },
 
 
@@ -134,31 +149,7 @@ export var Actions = {
  	})
  }
 
-
- // routeUserToProperView: function(usrModel){
- // 	// 
- // 	var houseId  = usrModel.get('houseId')
- // 	console.log(houseId)
-
- // 	if( houseId === "nothing" ) {
- // 		// 
- // 		DOM.render(<WaitForInviteView/>,document.querySelector('.container'))
-
- // 	}else{
- 	
- // 		var choresInHouseColl  = new Collections.QueryByHouseId(houseId)
- // 		// var getTheRoomies 	   = new Collections.QueryByEmail
- // 		var roomiesInHouseColl = new Collections.QueryUserByHouseId(houseId)
-
- // 		// 
- // 		DOM.render(<DashView houseId={houseId} choresInHouseColl={choresInHouseColl} roomiesInHouseColl={roomiesInHouseColl}/>, document.querySelector('.container'))
- // 	}
-
- // }
-
-
 }
- 			
 
 
 

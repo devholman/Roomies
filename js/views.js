@@ -53,12 +53,12 @@
 
 		render: function(){
 			return(
-				<div className="nav-bar-container">
+				<div className="container-fluid nav-bar-container">
 					<a className="nav-links" href="#chores">House Chores </a>
 					<a className="nav-links" href="#myHouse">My Chores </a>
 					<a className="nav-links" href="#addRoomies">Add Roomies </a>					
 					<a className="nav-links" href="#createHouse">Create a new house </a>
-					<a className="nav-links" href="#logOut">LogOut </a>
+					<a className="nav-links" href="#logOut">Logout </a>
 					<hr/>
 				</div>
 			)
@@ -102,23 +102,22 @@
 		},
 
 		render: function() { 
-
-							
-			console.log(this.state.houseId)
+			// console.log(this.state.houseId)
 			if (this.state.houseId !== undefined) {
 				var content = <div>
 								<Header/>
 								<NavBar />
 							  </div>
-			}
-			else {
+			}else {
 				var content = (
 					<div>
 						<Header/>
 						<NavBar />
-						<h3>Please wait for a House Invite</h3><br/>
-						<h3>Or</h3>
-						<CreateNewHouseView/>
+						<div className="container invite-page">
+							<h3 className="invite-text">Please wait for a <u>House Invite</u> from an existing house owner...</h3><br/>
+							<h3 className="invite-text">Or</h3>
+							<CreateNewHouseView/>
+						</div>
 					</div>
 				)
 			}
@@ -139,6 +138,7 @@
 			return(
 				<div className="authPage">
 					<Header />
+					<div className="signUp-background-img"></div>
 					<SignUp /> 
 				</div>
 			)
@@ -172,13 +172,13 @@
 			return (
 					<form onSubmit={this._doSignUp} className="signUp-form">
 						<h3>Create an Account</h3>
-						Enter your name:
+						<label>Enter your name:</label><br/>
 						<input onChange={this._updateName} required/><br/>
-						Enter Email:<br/>
+						<label>Enter Email:</label><br/>
 						<input onChange={this._updateEmail} required/><br/>
-						Enter a password:<br/>
+						<label>Enter a password:</label><br/>
 						<input onChange={this._updatePassword} type="password" required/><br/>
-						<input className="button-primary" id="signUpBtn" type="submit" DefaultValue="Sign Up"/><br/>
+						<input className="button-primary" id="signUp-btn" type="submit" DefaultValue="Sign Up"/><br/>
 					</form>
 				)
 		}
@@ -206,7 +206,7 @@
 			return(
 				<div className="signIn-container">
 					<Header />
-					<div className="signUp-background-img"></div>
+					<div className="signIn-background-img"></div>
 					<form onSubmit={this._doSignIn}>
 						<h3>Sign In</h3>
 						<label>Enter Email:</label><br/>
@@ -235,11 +235,13 @@
 
 		render: function(){
 			return(
-				<div>
-					<form onSubmit={this._addHouse}>
-						<h4> Create a house name: </h4><br/>
-						<input onChange={this._updateHouseName} placeholder="Enter a house name"/><br/>
-						<input className="button-primary" type="submit" id="addHouseBtn" DefaultValue="add house" />
+				<div className="container">
+					<form onSubmit={this._addHouse} className="add-house-form">
+						<h4 className="invite-text"> Create a new house name : </h4><br/>
+						<div>
+							<input onChange={this._updateHouseName} placeholder="Enter a house name"/>
+							<input className="button-primary" type="submit" id="add-house-btn" DefaultValue="add house" />
+						</div>
 					</form>
 				</div>
 			)
@@ -535,8 +537,10 @@ var ContactUs = React.createClass({
 				<div>
 					<Header />
 					<NavBar />
-					<RoomieAdder houseId={this.props.houseId} />
-					<RoomieList houseId={this.props.houseId} roomiesInHouseColl={this.props.roomiesInHouseColl} />
+					<div className="container">
+						<RoomieAdder houseId={this.props.houseId} />
+						<RoomieList houseId={this.props.houseId} roomiesInHouseColl={this.props.roomiesInHouseColl} />
+					</div>
 				</div>
 			)
 		}
@@ -569,10 +573,9 @@ var ContactUs = React.createClass({
 			return(
 				<div className="roomie-container">
 					<form onSubmit={this._submitRoomie}>
-						<h5>Add a Roomie:</h5><br/>
-						Email:
-						<input type="text" id="roomieEmail" onChange={this._addRoomieEmail}/><br/>
-						<input className="button-primary" id="addRoomieBtn" type="submit" defaultValue="Add Roomie"/><br/>
+						<h1>Add a Roomie:</h1><br/>
+						<input type="text" id="roomieEmail" placeholder="Enter Roomie Email" onChange={this._addRoomieEmail}/>
+						<input className="button-primary" id="add-roomie-btn" type="submit" defaultValue="Add Roomie"/><br/>
 					</form>
 				</div>
 			)
@@ -591,8 +594,8 @@ var ContactUs = React.createClass({
 			
 			return(
 				<div className="col-xs-12 col-sm-12 roomie-list-container">
-					<h3>All My Roomies</h3>
-					{this.props.roomiesInHouseColl.map(this._getRoomie)}
+					<h1>All My Roomies</h1>
+					<h2>{this.props.roomiesInHouseColl.map(this._getRoomie)}</h2>
 				</div>
 			)
 		}
