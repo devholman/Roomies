@@ -432,7 +432,7 @@ var ContactUs = React.createClass({
 					<div className="container">
 						<div className="row">
 							<div className="col-xs-12 col-sm-3 view-buttons">{this._genButtons()}</div>
-							<ChoresList choresInHouseColl={this.props.choresInHouseColl} choreData={choresShowing} houseId={this.props.houseId}/>
+							<ChoresListAndInput choresInHouseColl={this.props.choresInHouseColl} choreData={choresShowing} houseId={this.props.houseId}/>
 						</div>
 
 					</div>
@@ -441,12 +441,7 @@ var ContactUs = React.createClass({
 		}
 	})
 
-	var ChoresList = React.createClass({
-
-		_makeChore: function(choreModel,i){
-			if(!choreModel.id ){return ''} //removes firebase ghost model
-			return <Chore model={choreModel} key={i} choresInHouseColl={this.props.choresInHouseColl} />
-		},
+	var ChoresListAndInput = React.createClass({
 
 		_choreAdder: function(keyEvent){
 			if(keyEvent.keyCode ===13){
@@ -459,8 +454,8 @@ var ContactUs = React.createClass({
 
 		componentDidMount: function(){
 			var component = this
-			BackboneFire.Events.on('getUserId', function(userId){
-			})
+			// BackboneFire.Events.on('getUserId', function(userId){
+			// })
 		},
 
 		render: function(){
@@ -470,9 +465,38 @@ var ContactUs = React.createClass({
 						<h5>Shared Chores</h5><br/>
 						<div>
 							<input className="search-bar" placeholder="Add a new chore and press Enter" onKeyDown={this._choreAdder} />	
-							{this.props.choreData.map(this._makeChore)}
+							<ChoresTable choreData={this.props.choreData}/>
 						</div>
 					</div>
+			)
+		}
+	})
+
+	var ChoresTable = React.createClass({
+
+		_makeChore: function(choreModel,i){
+			if(!choreModel.id ){return ''} //removes firebase ghost model
+			return <Chore model={choreModel} key={i} choresInHouseColl={this.props.choresInHouseColl} />
+		},
+
+		render: function(){
+			return(
+				<div>
+					<table className="table striped">
+						<thead>
+							<tr>
+								<th>Chore Name</th>
+								<th>Current Status</th>
+								<th>Remove Chore</th>
+							</tr>
+						</thead>
+						<tbody>
+							{this.props.choreData
+								.filter((m)=> {return typeof m.id !== 'undefined'})
+								.map(this._makeChore)}
+						</tbody>
+					</table>
+				</div>
 			)
 		}
 	})
@@ -487,35 +511,42 @@ var ContactUs = React.createClass({
 			Actions.grabAChore(this.props.model)
 		},
 
+		_showButtonOrClaimedBy: function(clmByTxt){
+			if(clmByTxt.length > 0){
+				return 	<h6>{clmByTxt}</h6>
+
+			} else {
+				return 	<button className="grab-chore-btn" onClick={this._grabber}>Claim it</button>
+
+			}
+		},
+
 		render: function(){
 		 // case where chore is claimed
-			var buttonStyleObj={
-				display:"none"
-			}
-			var claimed=`claimed by: ${this.props.model.get('userEmail')}`
+			// var buttonStyleObj={
+			// 	display:"none"
+			// }
 
+			var claimedByText=`claimed by: ${this.props.model.get('userEmail')}`
 		
-		//case where chore is unclaimed
-
+			//case where chore is unclaimed
 			if(this.props.model.get('userId') === '_'){ // if userId equals _ on the chore model then show the 'claim' button
-				buttonStyleObj.display="inline-block"
-				claimed = ''
+				claimedByText = ''
 			}
 
 			return(
-				<div className="single-chore-container" id="chore-styles">
-					<div className="chore-header">
-						<button style={buttonStyleObj} className="chore-remove-btn" onClick={this._remover}>X</button>
-					</div>
-					<div className="chore-body">
-						<p>{this.props.model.get('choreText')}</p>
-						<button style={buttonStyleObj} className="grab-chore-btn" onClick={this._grabber}>Claim it</button>
-						
-					</div>
-					<div className="chore-footer">
-						<span>{claimed}</span>
-					</div>
-				</div>
+				// make me a tr...
+				<tr className="single-chore-container" id="chore-styles">
+					<td className="chore-header">
+						<h4>{this.props.model.get('choreText')}</h4>
+					</td>
+					<td className="chore-body">
+						{ this._showButtonOrClaimedBy(claimedByText) }
+					</td>
+					<td className="chore-footer">
+						<button  className="chore-remove-btn" onClick={this._remover}>X</button>
+					</td>
+				</tr>
 			)
 		}
 	})
