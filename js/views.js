@@ -53,9 +53,9 @@
 
 		render: function(){
 			return(
-				<div className="container-fluid nav-bar-container">
-					<a className="nav-links" href="#chores">House Chores </a>
-					<a className="nav-links" href="#myHouse">My Chores </a>
+				<div className="container-fluid nav-bar-container align-children">
+					<a className="nav-links" href="#houseChores">House Chores </a>
+					<a className="nav-links" href="#myChores">My Chores </a>
 					<a className="nav-links" href="#addRoomies">Add Roomies </a>					
 					<a className="nav-links" href="#createHouse">Create a new house </a>
 					<a className="nav-links" href="#logOut">Logout </a>
@@ -283,7 +283,7 @@ var ContactUs = React.createClass({
 })
 
 
-// *************** MY HOUSE VIEWS ******************
+// *************** MY CHORES VIEWS ******************
 
 	var MyHouseView 		 = React.createClass({
 		componentDidMount:function(){
@@ -501,7 +501,7 @@ var ContactUs = React.createClass({
 		}
 	})
 
-	var Chore 	   = React.createClass({
+	var Chore 	 = React.createClass({
 
 		_remover: function(){
 			Actions.removeItem(this.props.model)

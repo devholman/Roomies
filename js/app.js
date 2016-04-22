@@ -41,8 +41,8 @@ var RoomieRouter = BackboneFire.Router.extend({
 		"createAccount"  : "handleSignUp",
 		"createHouse"    : "handleHouseCreation",
 		"DashView"	 	 : "handleDashView",
-		"myHouse" 		 : "handleMyHouse",
-		"chores"		 : "handleChores",
+		"myChores" 		 : "handleMyChores",
+		"houseChores"	 : "handleHouseChores",
 		"addRoomies" 	 : "handleAddRoomies",
 		"logOut"		 : "handleLogout",
 		"logIn" 		 : "handleLogIn",
@@ -54,7 +54,7 @@ var RoomieRouter = BackboneFire.Router.extend({
 
 		// if (!this.ref.getAuth()) {
 		//     location.hash = "splash"
-		// }
+		// 
 
 		// this.on('route', function() {
 		//     if (!this.ref.getAuth()) {
@@ -104,24 +104,27 @@ var RoomieRouter = BackboneFire.Router.extend({
 		DOM.render(<CreateNewHouseView/>, document.querySelector('#app-container'))
 	},
 
-	handleMyHouse: function(){
+	handleMyChores: function(){
+		console.log('rendering my chores')
 		function renderUserChoreView(UserModel){
 			var roomieChoresColl = new Collections.QueryByUserId(ref.getAuth().uid)
-
+			console.log('fresh coll>>>',roomieChoresColl)
 			DOM.render(<MyHouseView roomieChoresColl={roomieChoresColl} myMod={myMod} />, document.querySelector('#app-container') )
 		}
 
 		var myMod = new Models.UserModel(ref.getAuth().uid)
-		if(myMod.id) {
+
+		if (myMod.id) {
 			renderUserChoreView(myMod)
-		}else{
-			myMod.on('sync',function() {
+		}
+		else {
+			myMod.on('sync', function(){
 				renderUserChoreView(myMod)
 			})
 		}
 	},
 
-	handleChores: function(){
+	handleHouseChores: function(){
 		function renderChoresView(usrModel){
 			var houseId  = usrModel.get('houseId')
 			var choresInHouseColl = new Collections.QueryByHouseId(houseId)

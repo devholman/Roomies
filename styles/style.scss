@@ -5,6 +5,8 @@ $primary-green: rgb(51, 110, 123);
 $primary-red: rgb(221,72,68);
 $primary-teal: rgb(162,222,208);
 
+$mq-small: 'screen and (min-width: 768px)';
+
 /**
  * BOX-SIZING
  */
@@ -21,6 +23,15 @@ $primary-teal: rgb(162,222,208);
 /**
  * GRIDS
  */
+
+ .align-children{
+    font-size: 0;
+    >*{
+        display: inline-block;
+        font-size: medium;
+        vertical-align: top;
+    }
+ }
 
 .grid {
     display: block;
@@ -140,9 +151,8 @@ body {
         font-size: 20px;
         margin-bottom: 2.60606rem;
         font-family: 'Pacifico', cursive;
-
-
     }
+
     hr {
         margin: 0;
         background-color: $primary-red;
@@ -164,11 +174,21 @@ body {
         height: 5px;
         width: 100%;
     }
+
+
+    > * {
+        width: 100%;
+        padding: 10px;
+
+        @media #{$mq-small} {
+            width: 20%;
+            padding: 10px;
+        }
+    }
 }
 
 .nav-links {
     text-decoration: none;
-    margin-right: 30px;
     text-align: center;
     color: black;
     font-size: 24px;
@@ -387,7 +407,6 @@ a:hover {
     }
 }
 
-// **************************DASH VIEW STYILES*************************************//
 
 .invite-page {
     background-color: $primary-red;
@@ -434,6 +453,9 @@ a:hover {
 
 
  // **************************Shared House Chores Styles***************************//
+
+ // **************************SHARED HOUSE STYLES*************************************//
+
 
 .shared-house-chores {
     background: $primary-green;
@@ -489,21 +511,13 @@ a:hover {
     text-decoration: none;
     display: inline-block;
     font-size: 18px;
+
 }
 
 .chore-header {
     text-align: right;
     border: none;
-
-    .chore-remove-btn {
-       display: inline-block;
-       border-radius: 5px;
-       font-size: small;
-       background-color: rgb(89,184,171);
-       text-decoration: none;
-       border: none;
-       border: 1px solid;
-    }
+    text-align: left;
 }
 
 .chore-body {
@@ -520,13 +534,24 @@ a:hover {
     span {
         margin: 0 10px;
     }
+
+    .chore-remove-btn {
+        background-color: $primary-red;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+    }
 }
 
- #chore-styles {
+#chore-styles {
     border-bottom: 3px solid;
     border-color: $primary-red;
     // border-top: 3px solid;
- }
+}
 
 
  // **************************Side Menu Styles***************************//
@@ -546,7 +571,6 @@ a:hover {
         outline: none;
         // border-top-right-radius: 5px;
         // border-top-left-radius: 5px;
-
     }
 
  }
@@ -583,14 +607,12 @@ a:hover {
     border-color: rgb(89,184,171);
     background-color: rgb(89,184,171);
     vertical-align: center;
-
 }
 
 .btn-danger {
     background-color: $primary-red;
     border-color: $primary-red;
     vertical-align: center;
-
 }
 
 .my-house-body {

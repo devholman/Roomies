@@ -33,7 +33,7 @@ export var Actions = {
 			// 
 			// um.fetchWithPromise().then(function(){
 			// 	
-			location.hash = "chores"
+			location.hash = "houseChores"
 		}
 	})
  },
@@ -101,7 +101,7 @@ export var Actions = {
 	})
 
 	um.set({houseId:houseId})
-	location.hash = "chores"
+	location.hash = "houseChores"
  },
 
 
@@ -117,6 +117,7 @@ export var Actions = {
 
  removeItem: function(choreModel){
  	console.log ("trying to delete:", choreModel)
+ 	// choreModel.url = `http://roomieshare.firebaseio.com/chores/${choreModel.id}`
  	choreModel.destroy()
  },
 
