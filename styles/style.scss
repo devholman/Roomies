@@ -230,6 +230,7 @@ a:hover {
     position: fixed;
     font-family: Pacifico,cursive;
     background: white;
+    z-index: 3;
 
     h2 {
         font-family: Pacifico,cursive;
@@ -272,6 +273,8 @@ a:hover {
     }
 }
 
+// **************************How It Works Styles***************************************//
+
 .hiw-container {
     background: $primary-red;
 
@@ -280,18 +283,118 @@ a:hover {
         color: white;
         font-weight: lighter;
     }
+}
 
-    ul{
-        margin:0;
+.hiw-create-house {
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+    background: whitesmoke;
+    width: 80%;
+    margin: auto 10%;
+
+    div {
+        width: 45%;
+        display: inline-block;
+        padding: 70px;
+    }
+
+    img{
+        max-width: 45%;
+        margin: 5%;
     }
 }
 
+.hiw-add-roomies{
+    background: linen;
+    width: 80%;
+    margin: 10px auto;
+    div{
+        display: inline-block;
+        margin: 10%;
+    }
+
+    img{
+        max-width: 45%;
+        margin: 5%;
+    }
+
+}
+
+.hiw-list-chores{
+    background: whitesmoke;
+    width: 80%;
+    margin: 10px auto;
+    div{
+        display: inline-block;
+        width: 45%;
+        padding: 70px;
+    }
+
+    img{
+        max-width: 45%;
+        margin: 5%;
+    }
+}
+
+.do-your-part{
+    background: linen;
+    width: 80%;
+    margin: 10px auto;
+
+    div{
+        display: inline-block;
+        width: 45%;
+    }
+
+    img{
+        max-width: 45%;
+        margin: 5%;
+    }
+}
+
+// **************************Contact Us Styles***************************************//
+
 .contact-container {
     background: $primary-green;
+    text-align: left;
+    width: 40%;
+    font-size: 20px;
+    padding: 20px;
+    margin: auto;
+
     h3 {
         background: $primary-green;
         color: white;
         font-family: 'Kaushan Script', cursive;
+        padding: 50px 0px;
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        color: white;
+    }
+
+    input{
+        outline: none;
+    }
+
+    textarea{
+        width: 60%;
+        height: 100px;
+        outline: none;
+    }
+
+    #submit-comment{
+        display: block;
+        background-color: $primary-red;
+        border: none;
+        color: white;
+        padding: 12px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 25px;
     }
 }
 // **************************Sign Up Styles***************************************//

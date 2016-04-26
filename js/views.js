@@ -74,7 +74,6 @@
 					<div className="splash-background-img"></div>
 					<h3>"Sharing a home has never been easier"</h3>
 					<HowItWorks/>
-					<ContactUs/>
 				</div>
 			)
 		}
@@ -255,32 +254,88 @@ var HowItWorks = React.createClass({
 		return(
 			<div className="hiw-container">
 				<h3>How It Works</h3>
-				<ul>
-					<li>Create a House Name</li>
-					<li>Add Your Roomies</li>
-					<li>List House chores</li>
-					<li>Do Your Part</li>
-				</ul>
+				<SignUpCreateHouse/>
+				<AddYourRoomies/>
+				<ListHouseChores/>
+				<DoYourPart/>
 			</div>
+
 		)
 	}
 })
-// *************** CONTACT ********************
-var ContactUs = React.createClass({
-	
+
+var SignUpCreateHouse = React.createClass({
 	render: function(){
 		return(
-			<div className="contact-container">
-				<h3>Connect with Us</h3>
-				<form>
-					Name:<input type="text"></input>
-					Email:<input type="text"></input>
-					Comment:<textarea type="text"></textarea>
-				</form>
+			<div className="hiw-create-house">
+				<div>
+					<h4>Sign Up! If you are the first Roomie to sign up, Create a house name. Or if your roomie has already created a house, have your roomie add you to their existing house using your email</h4>
+				</div>
+				<img src="./images/addHouse.png"/>
 			</div>
 		)
 	}
 })
+
+var AddYourRoomies = React.createClass({
+	render: function(){
+		return(
+			<div className="hiw-add-roomies">
+				<img src="./images/addRoomies.png"/>
+				<div>
+					<h4>Add your Roomie using their email</h4>
+				</div>
+			</div>
+		)
+	}
+})
+
+var ListHouseChores = React.createClass({
+	render: function(){
+		return(
+			<div className="hiw-list-chores">
+				<div>
+					<h4>Create a List of shared house chores</h4>
+				</div>
+				<img src="./images/listChores.png"/>
+			</div>
+		)
+	}
+})
+
+var DoYourPart = React.createClass({
+	render: function(){
+		return(
+			<div className="do-your-part">
+				<img src="./images/DoYourPart.png"/>
+				<div>
+					<h4>Do your part by claiming and completing chores</h4>
+				</div>
+			</div>
+		)
+	}
+})
+
+// *************** CONTACT ********************
+// var ContactUs = React.createClass({
+	
+// 	render: function(){
+// 		return(
+// 			<div className="contact-container">
+// 				<h3>Connect with Us</h3>
+// 				<form>
+// 					<label>Name:</label>
+// 					<input type="text"></input>
+// 					<label>Email:</label>
+// 					<input type="text"></input>
+// 					<label>Comment:</label>
+// 					<textarea type="text">Hello,this feature is not yet functional. Please email devynholman@outlook.com if you wish to leave a comment.</textarea>
+// 					<input type="submit" id="submit-comment"></input>
+// 				</form>
+// 			</div>
+// 		)
+// 	}
+// })
 
 
 // *************** MY CHORES VIEWS ******************
@@ -310,7 +365,6 @@ var ContactUs = React.createClass({
 			if(!choreMod.id ){return ''}
 			return <RoomieChore key={i} choreMod={choreMod}/>
 	},
-
 
 		render: function(){
 			var myMod = this.props.myMod
@@ -411,7 +465,7 @@ var ContactUs = React.createClass({
 		},
 
 		_hasId: function(choreModel){
-			if(choreModel.get('userId') !== undefined){
+			if(choreModel.get('userId') !== '_'){
 				return true
 			}else{
 				return false
@@ -513,25 +567,27 @@ var ContactUs = React.createClass({
 
 		_showButtonOrClaimedBy: function(clmByTxt){
 			if(clmByTxt.length > 0){
-				return 	<h6>{clmByTxt}</h6>
+				return 	<h6>{clmByTxt}</h6> 
 
 			} else {
 				return 	<button className="grab-chore-btn" onClick={this._grabber}>Claim it</button>
-
 			}
 		},
 
 		render: function(){
 		 // case where chore is claimed
-			// var buttonStyleObj={
-			// 	display:"none"
-			// }
+			var buttonStyleObj={
+				display:"none"
+			}
 
 			var claimedByText=`claimed by: ${this.props.model.get('userEmail')}`
 		
 			//case where chore is unclaimed
 			if(this.props.model.get('userId') === '_'){ // if userId equals _ on the chore model then show the 'claim' button
 				claimedByText = ''
+				buttonStyleObj={display:"table-cell"}
+			}else{
+				buttonStyleObj={display:"none"}
 			}
 
 			return(
@@ -544,7 +600,7 @@ var ContactUs = React.createClass({
 						{ this._showButtonOrClaimedBy(claimedByText) }
 					</td>
 					<td className="chore-footer">
-						<button  className="chore-remove-btn" onClick={this._remover}>X</button>
+						<button style={buttonStyleObj} className="chore-remove-btn" onClick={this._remover}>X</button>
 					</td>
 				</tr>
 			)
