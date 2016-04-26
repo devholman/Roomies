@@ -34,7 +34,7 @@
 			return(
 				<div className="splash-header-container col-xs-12 col-sm-12">
 					<h2 className="splash-title col-xs-12 col-sm-12">Roomies</h2>
-					<div className="splash-btn-container col-xs-12 col-sm-12">
+					<nav className="splash-btn-container col-xs-12 col-sm-12">
 						<button onClick={this._signerUpper}>Sign Up</button>
 						<p>|</p>
 						<button onClick={this._signerInner}>Sign In</button>
@@ -42,7 +42,7 @@
 						<button>How it Works</button>
 						<p>|</p>
 						<button>Contact</button>
-					</div>
+					</nav>
 				</div>
 			)
 		}
@@ -53,14 +53,14 @@
 
 		render: function(){
 			return(
-				<div className="container-fluid nav-bar-container align-children">
+				<nav className="container-fluid nav-bar-container align-children">
 					<a className="nav-links" href="#houseChores">House Chores </a>
 					<a className="nav-links" href="#myChores">My Chores </a>
 					<a className="nav-links" href="#addRoomies">Add Roomies </a>					
 					<a className="nav-links" href="#createHouse">Create a new house </a>
 					<a className="nav-links" href="#logOut">Logout </a>
 					<hr/>
-				</div>
+				</nav>
 			)
 		}
 	})
@@ -307,7 +307,7 @@ var DoYourPart = React.createClass({
 	render: function(){
 		return(
 			<div className="do-your-part">
-				<img src="./images/DoYourPart.png"/>
+				<img src="./images/doYourPart.png"/>
 				<div>
 					<h4>Do your part by claiming and completing chores</h4>
 				</div>
