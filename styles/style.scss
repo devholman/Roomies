@@ -6,6 +6,7 @@ $primary-red: rgb(221,72,68);
 $primary-teal: rgb(162,222,208);
 
 $mq-small: 'screen and (min-width: 768px)';
+$mq-xsmall: 'screen and (max-width: 414px)';
 
 /**
  * BOX-SIZING
@@ -192,17 +193,21 @@ body {
     text-align: center;
     color: black;
     font-size: 24px;
+
+    @media #{$mq-xsmall}{
+        width: 50%;
+        border: 1px solid white;
+        color: white;
+        display: inline-block;
+    }
 }
 
-// @media (min-width: @screen-sm-min){
-//     .nav-links{
-//         font-size: 18px;
-//         text-decoration: none;
-//         margin-right: 30px;
-//         text-align: center;
-//         color: black;
-//     }
-// }
+@media #{$mq-xsmall}{
+
+    #create-house-btn{
+        display: none;
+    }
+}
 
 a:hover {
     text-decoration: underline;
@@ -212,15 +217,22 @@ a:hover {
 
 .splash-container {
     h3 {
-        margin: 0px;
-        position: relative;
+        margin: 0;
         text-align: center;
-        font-family: 'Pacifico';
-        background: $primary-teal;
-        padding: 50px;
-        font-size: 60px;
+        font-family: Pacifico;
+        background: #a2ded0;
+        padding: 20px;
+        font-size: 30px;
 
-
+        @media #{$mq-small}{
+            margin: 0px;
+            position: relative;
+            text-align: center;
+            font-family: 'Pacifico';
+            background: $primary-teal;
+            padding: 50px;
+            font-size: 60px;
+        }
     }
 }
 .splash-header-container{
@@ -234,8 +246,15 @@ a:hover {
 
     h2 {
         font-family: Pacifico,cursive;
-        font-size: 50px;
+        font-size: 30px;
         margin: auto;
+
+        @media #{$mq-small}{
+            font-family: Pacifico,cursive;
+            font-size: 50px;
+            margin: auto;
+        }
+
     }
 }
 
@@ -256,21 +275,30 @@ a:hover {
     position: relative;
 
     button {
-        background-color: white; /* Green */
+        background-color: white;
         border: none;
         color: black;
-        // padding: 15px 32px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 20px;
+        font-size: 10px;
         outline: none;
+
+        @media #{$mq-small}{
+            background-color: white; /* Green */
+            border: none;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            outline: none;
+        }
     }
 
     p {
-        margin: auto auto 0.9em;
-        font-size: 30px;
-
+        margin: auto auto 1.9em;
+        font-size: 20px;
     }
 }
 
@@ -297,12 +325,37 @@ a:hover {
     div {
         width: 45%;
         display: inline-block;
-        padding: 70px;
+        padding: 10px;
+
+        h4 {
+            font-size: 12px;
+        }
     }
 
     img{
         max-width: 45%;
         margin: 5%;
+        vertical-align: initial;
+    }
+
+    @media #{$mq-small}{
+        div {
+            width: 45%;
+            display: inline-block;
+            padding: 10px;
+            vertical-align: middle;
+
+            h4 {
+                font-size: 20px;
+            }
+        }
+
+
+        img {
+            max-width: 45%;
+            margin: 5%;
+            vertical-align: middle;
+        }
     }
 }
 
@@ -310,14 +363,28 @@ a:hover {
     background: linen;
     width: 80%;
     margin: 10px auto;
+    
     div{
         display: inline-block;
-        margin: 10%;
+        width: 45%;
+        padding: 10px;
+        // display: inline-block;
+        // margin: 10%;
+    }
+
+    h4 {
+        font-size: 12px;
     }
 
     img{
         max-width: 45%;
         margin: 5%;
+    }
+
+    @media #{$mq-small}{
+        h4 {
+            font-size: 20px;
+        }
     }
 
 }
@@ -329,12 +396,22 @@ a:hover {
     div{
         display: inline-block;
         width: 45%;
-        padding: 70px;
+        padding: 10px;
+    }
+
+    h4 {
+        font-size: 12px;
     }
 
     img{
         max-width: 45%;
         margin: 5%;
+    }
+
+    @media #{$mq-small}{
+        h4 {
+            font-size: 20px;
+        }
     }
 }
 
@@ -348,9 +425,19 @@ a:hover {
         width: 45%;
     }
 
+    h4 {
+        font-size: 12px;
+    }
+
     img{
         max-width: 45%;
         margin: 5%;
+    }
+
+    @media #{$mq-small}{
+        h4 {
+            font-size: 20px;
+        }
     }
 }
 
@@ -403,12 +490,23 @@ a:hover {
 .signUp-form { 
     text-align: center;
     color: gray;
-    width: 30%;
+    width: 70%;
     background: white;
     border-radius: 5%;
     position: fixed;
-    left: 35%;
+    left: 15%;
     top: 30%;
+
+    @media #{$mq-small}{
+        text-align: center;
+        color: gray;
+        width: 40%;
+        background: white;
+        border-radius: 5%;
+        position: fixed;
+        left: 30%;
+        top: 30%;
+    }
     
     .signUp-background-img {
         background-image: url("./images/col-roomies.gif");
@@ -463,16 +561,39 @@ a:hover {
     form {
         text-align: center;
         background: white;
-        width: 30%;
+        width: 60%;
         height: 40%;
         opacity: .7;
         display: inline-block;
         position: fixed;
-        left: 35%;
+        left: 20%;
         border: 2px solid;
         top: 30%;
         border-radius: 10px;
         text-decoration: none;
+
+        @media #{$mq-small}{
+            text-align: center;
+            background: white;
+            width: 50%;
+            height: 40%;
+            opacity: .7;
+            display: inline-block;
+            position: fixed;
+            left: 25%;
+            border: 2px solid;
+            top: 30%;
+            border-radius: 10px;
+            text-decoration: none;
+
+            .button-primary {
+                margin: 5%;
+            }
+
+            input {
+                margin-bottom: 3%;
+            }
+        }
 
         .user-info {
             border: 3px solid;
@@ -511,6 +632,8 @@ a:hover {
     }
 }
 
+// **************************Invite/New House View***************************//
+
 
 .invite-page {
     background-color: $primary-red;
@@ -519,11 +642,11 @@ a:hover {
 
 .invite-text {
     text-align: center;
-    font-size: 60px;
-    // font-style: italic;
-    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    font-family: Pacifico,cursive;
     font-weight: lighter;
     color: whitesmoke;
+
 }
 
 .add-house-form {
@@ -532,7 +655,7 @@ a:hover {
 
     input {
         outline: none;
-        font-size: 40px;
+        font-size: 30px;
         text-align: center;
     }
 
@@ -553,14 +676,23 @@ a:hover {
         font-size: 30px;
     }
 
+    @media #{$mq-small}{
+        #add-house-btn {
+            background-color: #59b8ab;
+            border: none;
+            margin: 2%;
+            color: white;
+            padding: 4px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 30px;
+        }
+    }
+
 }
 
-
- // **************************Shared House Chores Styles***************************//
-
  // **************************SHARED HOUSE STYLES*************************************//
-
-
 .shared-house-chores {
     background: $primary-green;
 }
@@ -583,8 +715,16 @@ a:hover {
         animation: blink-empty 1s;
         border-bottom: 2px solid;
         margin: 5% 15%;
-        font-size: 20px;
+        font-size: 15px;
         width: 70%;
+
+        // outline: none;
+        // border: none;
+        // animation: blink-empty 1s;
+        // border-bottom: 2px solid;
+        // margin: 5% 15%;
+        // font-size: 20px;
+        // width: 70%;
     }
 }
 
@@ -607,21 +747,38 @@ a:hover {
  }
 
 .grab-chore-btn {
-    background-color: rgb(89,184,171);
+    background-color: #59b8ab;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 0px 27px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 18px;
+    font-size: 19px;
 
+    @media #{$mq-small}{
+        background-color: #59b8ab;
+        border: none;
+        color: white;
+        padding: 13px 27px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 19px;
+    }
 }
 
 .chore-header {
     text-align: right;
     border: none;
     text-align: left;
+
+    @media #{$mq-small}{
+        h4 {
+            font-size: 30px;
+        }
+    }
+
 }
 
 .chore-body {
@@ -629,6 +786,10 @@ a:hover {
     border: none;
     display: flex;
     justify-content: space-around;
+
+    h6{
+        font-size: 15px;
+    }
 }
 
 .chore-footer {
@@ -654,14 +815,13 @@ a:hover {
 #chore-styles {
     border-bottom: 3px solid;
     border-color: $primary-red;
-    // border-top: 3px solid;
 }
 
 
  // **************************Side Menu Styles***************************//
 
-
  .view-buttons {
+    right: 10px;
 
     button {
         display: block;
@@ -673,14 +833,23 @@ a:hover {
         width: 100%;
         border-radius: 5px;
         outline: none;
-        // border-top-right-radius: 5px;
-        // border-top-left-radius: 5px;
-    }
 
+        @media #{$mq-small}{
+            display: block;
+            font-size: 30px;
+            border: none;
+            background: white;
+            border-bottom: 2px solid #dd4844;
+            margin: 10px 0px;
+            width: 100%;
+            border-radius: 5px;
+            outline: none;
+        }
+    }
  }
 
 
- // **************************My House Styles***************************//
+ // **************************My Chores Styles***************************//
 
 
 .welcome-header {
@@ -689,34 +858,77 @@ a:hover {
     h3{
         font-size: 46px;
     }
+
+    @media #{$mq-small}{
+        h3{
+            margin-bottom: 40.5px;
+        }
+    }
 }
 
 .table {
     thead {
-        font-size: 24px;
+        font-size: 15px;
         background-color: whitesmoke;
+    }
+
+    @media #{$mq-small}{
+        thead {
+            font-size: 30px;
+        }
+
+        tbody{
+            tr{
+                td {
+                    vertical-align: middle;
+                }
+            }
+
+        }
     }
 }
 
 .my-chores-list {
+
         box-shadow: 10px 10px 5px;
         background: white;
 }
 
 .my-chore-text {
     font-size: 50px;
+
 }
 
 .unclaim-chore-btn {
     border-color: rgb(89,184,171);
     background-color: rgb(89,184,171);
-    vertical-align: center;
+
+    @media #{$mq-small}{
+        background-color: #59b8ab;
+        border: none;
+        color: white;
+        padding: 13px 27px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 19px;
+    }
 }
 
 .btn-danger {
     background-color: $primary-red;
     border-color: $primary-red;
-    vertical-align: center;
+
+    @media #{$mq-small}{
+        background-color: $primary-red;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+    }
 }
 
 .my-house-body {

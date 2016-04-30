@@ -57,7 +57,7 @@
 					<a className="nav-links" href="#houseChores">House Chores </a>
 					<a className="nav-links" href="#myChores">My Chores </a>
 					<a className="nav-links" href="#addRoomies">Add Roomies </a>					
-					<a className="nav-links" href="#createHouse">Create a new house </a>
+					<a className="nav-links" href="#createHouse" id="create-house-btn">Create a new house </a>
 					<a className="nav-links" href="#logOut">Logout </a>
 					<hr/>
 				</nav>
